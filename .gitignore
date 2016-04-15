@@ -12,7 +12,5 @@
 hs_err_pid*
 
 target/
-<<<<<<< HEAD
 .idea/
-=======
->>>>>>> origin/opdracht2a
+*.iml
