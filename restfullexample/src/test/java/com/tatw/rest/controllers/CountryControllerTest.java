@@ -61,4 +61,19 @@ public class CountryControllerTest {
         assertEquals(404, response.getStatus());
     }
 
+    @Test
+    public void testAddCountry() {
+        Country country = new Country("GRUNN", "Groningen");
+        Response response = controller.addCountryToList(country);
+        assertNotNull(response);
+        assertEquals(201, response.getStatus());
+    }
+
+    @Test
+    public void testAddCountryFound() {
+        Country country = new Country("NL", "Groningen");
+        Response response = controller.addCountryToList(country);
+        assertNotNull(response);
+        assertEquals(409, response.getStatus());
+    }
 }

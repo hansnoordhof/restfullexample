@@ -13,7 +13,9 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.filter.RequestContextFilter;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static junit.framework.TestCase.assertEquals;
@@ -83,5 +85,30 @@ public class ApplicationEndPointTest extends JerseyTest {
 
     }
 
+    @Test
+    public void testAddCountryByCode() {
+        Country country = new Country("GRUNN", "Groningen");
+        Response response = target("country").request().put(Entity.entity(country, MediaType.APPLICATION_JSON));
+        assertNotNull(response);
+        assertEquals(201, response.getStatus());
+    }
+
+    @Test
+    public void testAddCountryByCodeFound() {
+        Country country = new Country("NL", "Groningen");
+        Response response = target("country").request().put(Entity.entity(country, MediaType.APPLICATION_JSON));
+        assertNotNull(response);
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    public void testAddCountryByCodeFoundNullObject() {
+        try {
+            Country country = null;
+            Response response = target("country").request().put(Entity.entity(country, MediaType.APPLICATION_JSON));
+        } catch (IllegalStateException e) {
+            assertNotNull(e);
+        }
+    }
 
 }

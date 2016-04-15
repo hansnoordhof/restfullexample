@@ -4,11 +4,9 @@ import com.tatw.rest.model.Country;
 import com.tatw.rest.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -55,6 +53,21 @@ public class CountryController {
         } else {
             return Response
                     .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+    }
+
+    @PUT
+    public Response addCountryToList(@Valid @NotNull Country country) {
+        Country countryFound = countryService.findByCode(country.getCode());
+        if (countryFound == null) {
+            countryService.getCountryList().add(country);
+            return Response
+                    .status(Response.Status.CREATED)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.CONFLICT)
                     .build();
         }
     }
