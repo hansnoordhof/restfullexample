@@ -52,10 +52,43 @@ public class CountryService implements ResourceLoaderAware {
     public Country findByCode(String code) {
         for (Country country : countryList) {
             if (code.equalsIgnoreCase(country.getCode())) {
-                return country;
+                return new Country(country.getCode(), country.getName());
             }
         }
         return null;
+    }
+
+    public Country replaceByCode(Country countryChange) {
+        Country countryFound = null;
+        for (int x=0; x< countryList.size(); x++) {
+            Country country = countryList.get(x);
+            if (country.getCode().equalsIgnoreCase(countryChange.getCode())) {
+                country.setName(countryChange.getName());
+                countryFound = country;
+                countryList.remove(x);
+                x = countryList.size();
+            }
+        }
+        /**
+         * country is found and deleted so added again
+         */
+        if (countryFound != null) {
+            countryList.add(countryFound);
+        }
+        return countryFound;
+    }
+
+    public Boolean deleteCountry(String code) {
+        Boolean isDeleted = false;
+        for (int x=0; x< countryList.size(); x++) {
+            Country country = countryList.get(x);
+            if (country.getCode().equalsIgnoreCase(code)) {
+                countryList.remove(x);
+                x = countryList.size();
+                isDeleted = true;
+            }
+        }
+        return isDeleted;
     }
 
     @Override

@@ -72,5 +72,36 @@ public class CountryController {
         }
     }
 
+    @POST
+    public Response changeCountry(@Valid @NotNull Country country) {
+        Country countryFound = countryService.findByCode(country.getCode());
+        if (countryFound != null) {
+            countryFound = countryService.replaceByCode(country);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(countryFound)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+    }
+
+    @DELETE
+    @Path("{code}")
+    public Response deleteCountry(@NotNull @PathParam("code") String code) {
+        Country country = countryService.findByCode(code);
+        if (country != null) {
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(country)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+    }
 
 }

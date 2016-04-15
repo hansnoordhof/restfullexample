@@ -111,4 +111,39 @@ public class ApplicationEndPointTest extends JerseyTest {
         }
     }
 
+    @Test
+    public void testChangeCountryNameByObject() {
+        Country country = new Country("AU", "Men At Work, Down under");
+        Response response = target("country").request().post(Entity.entity(country, MediaType.APPLICATION_JSON));
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        Object object = response.readEntity(Country.class);
+        assertTrue(object instanceof Country);
+        Country countryResponse = (Country)object;
+        assertEquals(country.getCode(), countryResponse.getCode());
+        assertEquals(country.getName(), countryResponse.getName());
+    }
+
+    @Test
+    public void testChangeCountryNameByObjectConflict() {
+        Country country = new Country("GRUNN", "Men At Work, Down under");
+        Response response = target("country").request().post(Entity.entity(country, MediaType.APPLICATION_JSON));
+        assertNotNull(response);
+        assertEquals(404, response.getStatus());
+    }
+
+    @Test
+    public void testDeleteCountryByCode() {
+        Response response = target("country/AU").request().delete();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testDeleteCountryByCodeNotFound() {
+        Response response = target("country/GRUNN").request().delete();
+        assertNotNull(response);
+        assertEquals(404, response.getStatus());
+    }
+
 }
