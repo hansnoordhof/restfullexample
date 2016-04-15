@@ -1,5 +1,6 @@
 package com.tatw.rest;
 
+import com.tatw.rest.config.BeanConfig;
 import com.tatw.rest.controllers.CountryController;
 import com.tatw.rest.controllers.HelloWorldController;
 import com.tatw.rest.model.Country;
@@ -32,7 +33,7 @@ public class ApplicationEndPointTest extends JerseyTest {
     @Override
     protected Application configure() {
         ResourceConfig rc = new ResourceConfig();
-        rc.property("contextConfig", new AnnotationConfigApplicationContext());
+        rc.property("contextConfig", new AnnotationConfigApplicationContext(BeanConfig.class));
         rc.register(SpringLifecycleListener.class).register(RequestContextFilter.class);
         rc.registerClasses(HelloWorldController.class);
         rc.registerClasses(CountryController.class);
@@ -67,6 +68,19 @@ public class ApplicationEndPointTest extends JerseyTest {
     public void testSingleCountry404() {
         Response response = target("country/doesnotexists").request().get();
         assertEquals(404, response.getStatus());
+    }
+
+    @Test
+    public void testGetCountryByCode() {
+        Response response = target("country/AU").request().get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        Object object = response.readEntity(Country.class);
+        assertTrue(object instanceof Country);
+        Country country = (Country)object;
+        assertEquals("AU", country.getCode());
+        assertEquals("Australia", country.getName());
+
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -29,6 +30,7 @@ public class CountryService implements ResourceLoaderAware {
     public CountryService() {
     }
 
+    @PostConstruct
     public void init() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();

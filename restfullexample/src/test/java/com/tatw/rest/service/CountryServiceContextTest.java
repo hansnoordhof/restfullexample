@@ -36,7 +36,6 @@ public class CountryServiceContextTest {
     @Test
     public void testConstructor() {
         assertNotNull(countryService);
-        countryService.init();
         assertTrue(countryService.getCountryList().size() == 243);
     }
 

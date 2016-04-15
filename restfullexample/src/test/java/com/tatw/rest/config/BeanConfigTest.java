@@ -1,5 +1,6 @@
-package com.tatw.rest.service;
+package com.tatw.rest.config;
 
+import com.tatw.rest.service.CountryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +11,21 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import static junit.framework.TestCase.*;
 
 /**
- * Created by hans on 14-04-16.
+ * Created by hans on 15-04-16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = CountryService.class, loader=AnnotationConfigContextLoader.class)
-public class CountryServiceTest {
+@ContextConfiguration(classes = BeanConfig.class, loader=AnnotationConfigContextLoader.class)
+public class BeanConfigTest {
 
     @Autowired
     private CountryService countryService;
 
     @Test
-    public void testConstructor() {
+    public void testBeanConfig() throws Exception {
         assertNotNull(countryService);
         assertTrue(countryService.getCountryList().size() == 243);
-        assertNotNull(countryService.findByCode("NL"));
-        assertNull(countryService.findByCode("NLNL"));
+        assertNotNull(countryService.findByCode("AU"));
+        assertNull(countryService.findByCode("AUAU"));
     }
-
 
 }
