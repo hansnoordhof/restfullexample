@@ -91,11 +91,9 @@ public class CountryController {
     @DELETE
     @Path("{code}")
     public Response deleteCountry(@NotNull @PathParam("code") String code) {
-        Country country = countryService.findByCode(code);
-        if (country != null) {
+        if (countryService.deleteCountry(code)) {
             return Response
                     .status(Response.Status.OK)
-                    .entity(country)
                     .build();
         } else {
             return Response

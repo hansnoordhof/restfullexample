@@ -36,11 +36,12 @@ public class CountryService implements ResourceLoaderAware {
         gsonBuilder.setPrettyPrinting();
         final Gson gson = gsonBuilder.create();
         try {
-            Reader reader = new InputStreamReader(this.resourceLoader.getResource("countries.json").getInputStream(), "UTF-8");
+            Reader reader = new InputStreamReader(this.resourceLoader.getResource("classpath:countries.json").getInputStream(), "UTF-8");
             Type listType = new TypeToken<ArrayList<Country>>() {
             }.getType();
             countryList = gson.fromJson(reader, listType);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             // Do nothing just to catch an exception
         } finally {
             if (countryList == null) {
