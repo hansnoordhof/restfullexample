@@ -132,18 +132,4 @@ public class ApplicationEndPointTest extends JerseyTest {
         assertEquals(404, response.getStatus());
     }
 
-    @Test
-    public void testDeleteCountryByCode() {
-        Response response = target("country/AU").request().delete();
-        assertNotNull(response);
-        assertEquals(200, response.getStatus());
-    }
-
-    @Test
-    public void testDeleteCountryByCodeNotFound() {
-        Response response = target("country/GRUNN").request().delete();
-        assertNotNull(response);
-        assertEquals(404, response.getStatus());
-    }
-
 }

@@ -57,16 +57,4 @@ public class CountryServiceTest {
         assertNull(countryChanged);
     }
 
-    @Test
-    public void testDeleteCountryByCode() {
-        assertNotNull(countryService);
-        countryService.init();
-        Country country = countryService.findByCode("AU");
-        assertNotNull(country);
-        assertTrue(countryService.deleteCountry(country.getCode()));
-        country = countryService.findByCode("AU");
-        assertNull(country);
-        assertFalse(countryService.deleteCountry("AU"));
-    }
-
 }

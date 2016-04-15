@@ -78,19 +78,6 @@ public class CountryService implements ResourceLoaderAware {
         return countryFound;
     }
 
-    public Boolean deleteCountry(String code) {
-        Boolean isDeleted = false;
-        for (int x=0; x< countryList.size(); x++) {
-            Country country = countryList.get(x);
-            if (country.getCode().equalsIgnoreCase(code)) {
-                countryList.remove(x);
-                x = countryList.size();
-                isDeleted = true;
-            }
-        }
-        return isDeleted;
-    }
-
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
